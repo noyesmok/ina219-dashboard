@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>INA219 Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="text-align:center;font-family:Arial;background:#111;color:white;">
+
+<h1>INA219 Monitor</h1>
+
+<h2>Voltage: <span id="v">--</span> V</h2>
+<h2>Current: <span id="c">--</span> mA</h2>
+<h2>Power: <span id="p">--</span> mW</h2>
+
+<script>
+setInterval(() => {
+  fetch("https://api.thingspeak.com/channels/3382993/feeds.json?results=1")
+  .then(res => res.json())
+  .then(data => {
+    let d = data.feeds[0];
+
+    document.getElementById("v").innerHTML = d.field1;
+    document.getElementById("c").innerHTML = d.field2;
+    document.getElementById("p").innerHTML = d.field3;
+  });
+}, 2000);
+</script>
+
+</body>
+</html>
